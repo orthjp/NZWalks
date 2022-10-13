@@ -22,30 +22,33 @@ namespace NZWalks.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRegions()
         {
-           var regions = await regionRepository.GetAllAsync(); 
+            var regions = await regionRepository.GetAllAsync();
 
             // Return DTO Regions
 
-            //var regionsDTO = new List<Models.DTO.Region>();
+            var regionsDTO = new List<Models.DTO.Region>();
 
-            //regions.ToList().ForEach(region =>
-            //{
-            //    var regionDTO = new Models.DTO.Region()
-            //    {
-            //        Id = region.Id,
-            //        Code = region.Code,
-            //        Name = region.Name,
-            //        Area = region.Area,
-            //        Lat = region.Lat,
-            //        Long = region.Long,
-            //        Population = region.Population
-            //    };
-            //    regionsDTO.Add(regionDTO);
-            //  return Ok(regionsDTO);
+            regions.ToList().ForEach(region =>
+            {
+                var regionDTO = new Models.DTO.Region()
+                {
+                    Id = region.Id,
+                    Code = region.Code,
+                    Name = region.Name,
+                    Area = region.Area,
+                    Lat = region.Lat,
+                    Long = region.Long,
+                    Population = region.Population
+                };
+                regionsDTO.Add(regionDTO);
+                //return Ok(regionsDTO);
 
-            var regionsDTO = mapper.Map<List<Models.DTO.Region>>(regions);
-            return Ok(regionsDTO);  
+                //var regionsDTO = mapper.Map<List<Models.DTO.Region>>(regions);
+                //return Ok(regionsDTO);  
+            });
+            return Ok(regionsDTO);
         }
+
 
         [HttpGet]
         [Route("{id:guid}")]
@@ -133,7 +136,7 @@ namespace NZWalks.API.Controllers
             };
 
             // update region using repository
-            region =  await regionRepository.UpdateAsync(id, region);
+          region =  await regionRepository.UpdateAsync(id, region);
 
             // if null then return not found
             if(region == null)
